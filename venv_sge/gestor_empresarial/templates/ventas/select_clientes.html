@@ -1,0 +1,35 @@
+{% extends 'tables.html' %}
+
+{% block botones%}
+<div class="text-center">
+    <h1>Clientes</h1>
+</div>
+<div class="row">
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'nuevo_cliente' %}" style="width: 15%;">Crear Cliente</a>
+</div>
+<br/>
+{% endblock %}
+{% load static %}
+
+{% block head %}
+
+<th> Nombre </th>
+<th> Direccion </th>
+<th> Telefono </th>
+<th> Correo </th>
+<th> Acciones </th>
+{% endblock %}
+{% block tbody %}
+{% for item in queryset %}
+<tr>
+    <td>{{ item.nombre }}</td>
+    <td>{{ item.direccion }}</td>
+    <td>{{ item.telefono }}</td>
+    <td>{{ item.correo }}</td>
+    <td>
+        <a class="btn btn-info btn-sm btn-block" href="{% url 'editar_cliente' item.id %}">Editar</a>
+        <a class="btn btn-danger btn-sm btn-block" href="{% url 'eliminar_cliente' item.id %}">Eliminar</a>
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}

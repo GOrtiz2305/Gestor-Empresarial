@@ -1,0 +1,32 @@
+{% extends 'tables.html' %}
+
+{% block botones%}
+<div class="text-center">
+    <h1>Ventas</h1>
+</div>
+<div class="row">
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'nueva_venta' %}" style="width: 15%;">Registrar venta</a>
+</div>
+<br/>
+{% endblock %}
+{% load static %}
+
+{% block head %}
+
+<th> Cliente </th>
+<th> Fecha </th>
+<th> Total </th>
+<th> Acciones </th>
+{% endblock %}
+{% block tbody %}
+{% for item in queryset %}
+<tr>
+    <td>{{ item.cliente.nombre }}</td>
+    <td>{{ item.fecha }}</td>
+    <td>{{ item.total }}</td>
+    <td>
+        <a class="btn btn-info btn-sm btn-block" href="{% url 'detalles_venta' item.id%}">Detalles</a>
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}

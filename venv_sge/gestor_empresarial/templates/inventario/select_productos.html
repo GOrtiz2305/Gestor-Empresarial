@@ -1,0 +1,41 @@
+{% extends 'tables.html' %}
+
+{% block botones%}
+<div class="text-center">
+    <h1>Productos</h1>
+</div>
+<div class="row">
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'nuevo_producto' %}" style="width: 15%;">Crear Producto</a>
+</div>
+<br/>
+{% endblock %}
+{% load static %}
+
+{% block head %}
+
+<th> Nombre </th>
+<th> Descripcion </th>
+<th> Precio Venta </th>
+<th> Precio Compra </th>
+<th> Stock </th>
+<th> Categoria </th>
+<th> Proveedor </th>
+<th> Acciones </th>
+{% endblock %}
+{% block tbody %}
+{% for item in queryset %}
+<tr>
+    <td>{{ item.nombre }}</td>
+    <td>{{ item.descripcion }}</td>
+    <td>{{ item.precio_venta }}</td>
+    <td>{{ item.precio_compra }}</td>
+    <td>{{ item.stock }}</td>
+    <td>{{ item.categoria }}</td>
+    <td>{{ item.proveedor }}</td>
+    <td>
+        <a class="btn btn-info btn-sm btn-block" href="{% url 'editar_producto' item.id %}">Editar</a>
+        <a class="btn btn-danger btn-sm btn-block" href="{% url 'eliminar_producto' item.id %}">Eliminar</a>
+    </td>
+</tr>
+{% endfor %}
+{% endblock %}

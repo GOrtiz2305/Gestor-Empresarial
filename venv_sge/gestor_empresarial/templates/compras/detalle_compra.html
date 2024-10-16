@@ -1,0 +1,43 @@
+{% extends 'tables.html' %}
+
+{% block botones%}
+<div class="text-center">
+    <h1>Detalles de compra</h1>
+</div>
+<div class="row">
+    <a class="btn btn-primary btn-lg btn-block" href="{% url 'listar_compras' %}" style="width: 15%;">Volver</a>
+</div>
+<br/>
+<div class="row">
+    <div class="col-md-4">
+        <label for="proveedor">Proveedor:</label>
+        <input type="text" class="form-control" id="proveedor" value="{{ encabezado.proveedor.nombre }}" readonly>
+    </div>
+    <div class="col-md-4">
+        <label for="fecha">Fecha:</label>
+        <input type="text" class="form-control" id="fecha" value="{{ encabezado.fecha }}" readonly>
+    </div>
+    <div class="col-md-4">
+        <label for="total">Total:</label>
+        <input type="text" class="form-control" id="total" value="{{ encabezado.total }}" readonly>
+    </div>
+</div>
+<br/>
+{% endblock %}
+{% load static %}
+
+{% block head %}
+
+<th> Producto </th>
+<th> Cantidad </th>
+<th> Subtotal </th>
+{% endblock %}
+{% block tbody %}
+{% for item in queryset %}
+<tr>
+    <td>{{ item.producto.nombre }}</td>
+    <td>{{ item.cantidad }}</td>
+    <td>{{ item.subtotal }}</td>
+</tr>
+{% endfor %}
+{% endblock %}
