@@ -1,0 +1,36 @@
+{% include 'core.html' %}
+{% load static %}
+{% block content %}
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gráfico de Ventas por Fecha</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="container">
+                        <div class="row my-4">
+                            <div class="col-sm-12 col-md-6 col-lg-6 col-xl-6 mx-auto">
+                                <div class="container">
+                                    <h1>Gráfico de Ventas por Fecha</h1>
+                                    <canvas id="graficoVentas" width="400" height="200"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- Apache ECharts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/echarts/5.4.1/echarts.min.js"></script>
+    <!-- Custom JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    {% endblock %}
