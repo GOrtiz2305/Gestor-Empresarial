@@ -7,7 +7,7 @@
 <div class="row">
     <a class="btn btn-primary btn-lg btn-block" href="{% url 'nueva_venta' %}" style="width: 15%;">Registrar venta</a>
 </div>
-<br/>
+<br />
 {% endblock %}
 {% load static %}
 
@@ -15,17 +15,23 @@
 
 <th> Cliente </th>
 <th> Fecha </th>
+<th> Productos </th>
 <th> Total </th>
 <th> Acciones </th>
 {% endblock %}
 {% block tbody %}
-{% for item in queryset %}
+{% for venta in queryset %}
 <tr>
-    <td>{{ item.cliente.nombre }}</td>
-    <td>{{ item.fecha }}</td>
-    <td>{{ item.total }}</td>
+    <td>{{ venta.cliente.nombre }}</td>
+    <td>{{ venta.fecha }}</td>
     <td>
-        <a class="btn btn-info btn-sm btn-block" href="{% url 'detalles_venta' item.id%}">Detalles</a>
+        {% for detalle in venta.detalles_venta %}
+        <li>{{ detalle.producto.nombre }}</li>
+        {% endfor %}
+    </td>
+    <td>{{ venta.total }}</td>
+    <td>
+        <a class="btn btn-info btn-sm btn-block" href="{% url 'detalles_venta' venta.id%}">Detalles</a>
     </td>
 </tr>
 {% endfor %}

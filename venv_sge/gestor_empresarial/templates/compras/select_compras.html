@@ -15,17 +15,23 @@
 
 <th> Proveedor </th>
 <th> Fecha </th>
+<th> Productos </th>
 <th> Total </th>
 <th> Acciones </th>
 {% endblock %}
 {% block tbody %}
-{% for item in queryset %}
+{% for compra in queryset %}
 <tr>
-    <td>{{ item.proveedor.nombre }}</td>
-    <td>{{ item.fecha }}</td>
-    <td>{{ item.total }}</td>
+    <td>{{ compra.proveedor.nombre }}</td>
+    <td>{{ compra.fecha }}</td>
     <td>
-        <a class="btn btn-info btn-sm btn-block" href="{% url 'detalles_compra' item.id%}">Detalles</a>
+        {% for detalle in compra.detalles_compra %}
+        <li>{{ detalle.producto.nombre }}</li>
+        {% endfor %}
+    </td>
+    <td>{{ compra.total }}</td>
+    <td>
+        <a class="btn btn-info btn-sm btn-block" href="{% url 'detalles_compra' compra.id%}">Detalles</a>
     </td>
 </tr>
 {% endfor %}

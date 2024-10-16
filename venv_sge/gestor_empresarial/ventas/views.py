@@ -99,14 +99,33 @@ def nueva_venta(request):
         return render(request, 'ventas/crear_venta.html', {'form': form, 'form2': form2, 'clientes': clientes, 'productos': productos})
     
 def listar_ventas(request):
+    # Obtener todas las ventas
     queryset = venta.objects.all()
-    ventas_data = [
-        {field.name: getattr(item, field.name) for field in venta._meta.fields}
-        for item in queryset
-    ]
+
+    ventas_data = []
+    
+    # Iterar por cada venta y agregar los detalles de venta
+    for item in queryset:
+        # Obtener todos los detalles de venta relacionados con la venta actual
+        detalles_venta = detalle_venta.objects.filter(venta=item)
+
+        # Crear una lista con los detalles de la venta
+        detalles_data = [
+            {field.name: getattr(detalle, field.name) for field in detalle_venta._meta.fields}
+            for detalle in detalles_venta
+        ]
+
+        # Agregar la venta con sus detalles al diccionario de ventas
+        ventas_data.append({
+            field.name: getattr(item, field.name) for field in venta._meta.fields
+        })
+
+        # Añadir los detalles al diccionario de cada venta
+        ventas_data[-1]['detalles_venta'] = detalles_data
+
     return render(request, 'ventas/select_ventas.html', {
         'queryset': ventas_data,
-        'modelo': 'venta'
+        'modelo': 'venta',
     })
 
 def detalles_venta(request, id):

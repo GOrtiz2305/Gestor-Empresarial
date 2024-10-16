@@ -98,16 +98,35 @@ def nueva_compra(request):
         proveedores = proveedor.objects.filter(estado=True)
         productos = producto.objects.filter(estado=True)
         return render(request, 'compras/crear_compra.html', {'form': form, 'form2': form2, 'proveedores': proveedores, 'productos': productos})
-    
+
 def listar_compras(request):
+    # Obtener todas las compras
     queryset = compra.objects.all()
-    compras_data = [
-        {field.name: getattr(item, field.name) for field in compra._meta.fields}
-        for item in queryset
-    ]
+
+    compras_data = []
+    
+    # Iterar por cada compra y agregar los detalles de compra
+    for item in queryset:
+        # Obtener todos los detalles de compra relacionados con la compra actual
+        detalles_compra = detalle_compra.objects.filter(compra=item)
+
+        # Crear una lista con los detalles de la venta
+        detalles_data = [
+            {field.name: getattr(detalle, field.name) for field in detalle_compra._meta.fields}
+            for detalle in detalles_compra
+        ]
+
+        # Agregar la venta con sus detalles al diccionario de ventas
+        compras_data.append({
+            field.name: getattr(item, field.name) for field in compra._meta.fields
+        })
+
+        # Añadir los detalles al diccionario de cada venta
+        compras_data[-1]['detalles_compra'] = detalles_data
+
     return render(request, 'compras/select_compras.html', {
         'queryset': compras_data,
-        'modelo': 'compra'
+        'modelo': 'compra',
     })
 
 def detalles_compra(request, id):
